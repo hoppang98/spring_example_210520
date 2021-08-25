@@ -1,13 +1,19 @@
 package com.example;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+@MapperScan(basePackages = "com.example.*") // mapper scan 추가!!!
 // @ComponentScan(basePackages= {"com", "com.example"})
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+// @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class}) - DB연동하면서 주석처리
 @SpringBootApplication
 public class SpringExampleApplication {
 
@@ -15,4 +21,14 @@ public class SpringExampleApplication {
 		SpringApplication.run(SpringExampleApplication.class, args);
 	}
 
+	@Bean
+	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource);
+
+		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*Mapper.xml"); // resources에 mappers 패키지 만들기
+		sessionFactory.setMapperLocations(res);
+
+		return sessionFactory.getObject();
+	}
 }
