@@ -32,7 +32,7 @@ public class ReviewRestController {
 	}
 	
 	
-	
+	//insert
 	// 요청 url : http://localhost/lesson03/ex02
 	@RequestMapping("/lesson03/ex02")
 	public String ex02() {
@@ -54,5 +54,28 @@ public class ReviewRestController {
 		
 		return "성공한 행의 개수는 : " + rowCount;
 	
+	}
+	
+	
+	//update
+	// 요청 URL : http://localhost/lesson03/ex03?id=19&review=고기가 덜익었지만 맛있어요
+	@RequestMapping("/lesson03/ex03")
+	public String ex03(
+			@RequestParam(value="id") int id,
+			@RequestParam(value="review") String review) {
+		
+		int rowCount = reviewBO.updateReview(id, review);
+		return "변경 완료:" + rowCount;
+	}
+	
+	
+	// delete 
+	// 요청 URL : http://localhost/lesson03/ex04?id=24
+	@RequestMapping("lesson03/ex04")
+	public String ex04(
+			@RequestParam(value="id") int id) {
+		
+		int rowCount = reviewBO.deleteReviewById(id);
+		return "삭제 완료: " + rowCount;
 	}
 }

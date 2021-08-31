@@ -19,4 +19,10 @@ public interface ReviewDAO {
 			@Param("point") double point, 
 			@Param("review") String review);
 	
+	
+	public int updateReview(  // map으로 구성
+			@Param("id") int id, 
+			@Param("review") String review);
+	
+	public int deleteReviewById(int id); // 하나만 넘거가면 Param어노테이션 안써도 된다.
 }
