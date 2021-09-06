@@ -26,5 +26,25 @@
 	<%-- 문구 그대로 출력 --%>
 	<c:out value="<script>alert('얼럿창 띄우기');</script>" escapeXml="true" />
 	
+	<h1>3. 조건문 (c:if)</h1>
+	<c:if test="${number1 > 50}">
+		number1은 50보다 크다.<br>
+	</c:if>
+	
+	<c:if test="${number1 == 100}">
+		number1은 100이다.<br>
+	</c:if>
+	
+	<c:if test="${number1 eq 100}"> <%-- eq와 ==은 같은 효과 --%>)
+		number1은 100이다.<br>
+	</c:if>
+	
+	<c:if test="${number1 ne 222}"> <%-- ne와 !=은 같은 효과 --%>)
+		number1은 222이 아니다.<br>
+	</c:if>
+	
+	<c:if test="${not empty number1}"> <%-- null = empty --%>
+		number1은 비어있지 않다.<br>
+	</c:if>
 </body>
 </html>
